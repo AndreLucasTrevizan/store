@@ -3,8 +3,15 @@ import React from 'react';
 import { Container, Nav, Navbar as NavbarBs, Button } from 'react-bootstrap';
 
 import { NavLink } from 'react-router-dom';
+import { useShoppingCart } from '../../context/ShoppingCartContext';
 
 export default function Navbar() {
+
+  const {
+    openCart,
+    cartQuantity
+  } = useShoppingCart();
+
   return (
     <NavbarBs
       className='bg-white shadow-sm mb-3'
@@ -16,7 +23,7 @@ export default function Navbar() {
           <Nav.Link to='/about' as={NavLink}>About</Nav.Link>
           <Nav.Link to='/store' as={NavLink}>Store</Nav.Link>
         </Nav>
-        <Button
+        {cartQuantity > 0 && (<Button
           variant='outline-primary'
           className='rounded-circle'
           style={{
@@ -24,6 +31,7 @@ export default function Navbar() {
             height: '3rem',
             position: 'relative'
           }}
+          onClick={openCart}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -48,8 +56,8 @@ export default function Navbar() {
               right: 0,
               transform: 'translate(25%, 25%)'
             }}
-            >0</div>
-        </Button>
+            >{cartQuantity}</div>
+        </Button>)}
       </Container>
     </NavbarBs>
   )
